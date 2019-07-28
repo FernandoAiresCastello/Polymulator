@@ -21,15 +21,47 @@ namespace Polymulator
 
         private List<EmulatorConfig> Emulators = new List<EmulatorConfig>();
         private EmulatorConfig SelectedEmulator;
+        private string ScreenshotPath;
+        private Bitmap ScreenshotsImage;
+        private Timer TitleFlashTimer;
+        private List<Color> TitleFlashColors = new List<Color>();
+        private int TitleFlashColorIx = 0;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            TitleFlashColors.Add(Color.Red);
+            TitleFlashColors.Add(Color.Lime);
+            TitleFlashColors.Add(Color.Blue);
+            TitleFlashColors.Add(Color.Magenta);
+            TitleFlashColors.Add(Color.Orange);
+            TitleFlashColors.Add(Color.Cyan);
+            TitleFlashColors.Add(Color.Yellow);
+            TitleFlashColors.Add(Color.White);
+
+            TitleFlashTimer = new Timer();
+            TitleFlashTimer.Interval = 100;
+            TitleFlashTimer.Tick += TitleFlashTimer_Tick;
+            TitleFlashTimer.Start();
+
+            Reload();
+        }
+
+        private void Reload()
+        {
             LoadConfig();
             UpdateMachineList();
             SetWindowColor(Color.MidnightBlue);
             SetControlColor(Color.White, Color.Navy);
             SetNoteColor(Color.White, Color.MidnightBlue);
+        }
+
+        private void TitleFlashTimer_Tick(object sender, EventArgs e)
+        {
+            TitleLabel.ForeColor = TitleFlashColors[TitleFlashColorIx++];
+            if (TitleFlashColorIx >= TitleFlashColors.Count)
+                TitleFlashColorIx = 0;
         }
 
         private void BtnClose_Click(object sender, EventArgs e)
@@ -62,6 +94,7 @@ namespace Polymulator
             NotePanel.BackColor = background;
             TxtNotes.ForeColor = foreground;
             TxtNotes.BackColor = background;
+            ImagePanel.BackColor = background;
         }
 
         private void MachineListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -95,6 +128,7 @@ namespace Polymulator
                 info.AppendLine("File not found in path " + path);
 
             TxtNotes.Text = info.ToString();
+            LoadScreenshots(romName);
         }
 
         private void TxtSearch_KeyUp(object sender, KeyEventArgs e)
@@ -115,8 +149,13 @@ namespace Polymulator
             }
 
             string[] lines = File.ReadAllLines(configFile);
+            ScreenshotPath = lines[0];
 
-            foreach (string line in lines)
+            int offset = 1;
+            string[] emulatorLines = new ArraySegment<string>(
+                lines, offset, lines.Length - offset).ToArray();
+
+            foreach (string line in emulatorLines)
             {
                 string[] parts = line.Trim().Split(';');
                 string machineName = parts.Length > 0 ? parts[0].Trim() : "";
@@ -235,6 +274,92 @@ namespace Polymulator
             }
 
             return string.Format("{0:n" + decimalPlaces + "} {1}", adjustedSize, SizeSuffixes[mag]);
+        }
+
+        private void BtnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void BtnSettings_Click(object sender, EventArgs e)
+        {
+            SettingsWindow win = new SettingsWindow(this);
+            win.SetColors(Color.AliceBlue, Color.Navy);
+            win.ShowDialog(this);
+        }
+
+        private void BtnMaximize_Click(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Normal)
+                WindowState = FormWindowState.Maximized;
+            else
+                WindowState = FormWindowState.Normal;
+        }
+
+        public void OnConfigUpdate()
+        {
+            Reload();
+        }
+
+        private void LoadScreenshots(string romName)
+        {
+            string path1 = $"{ScreenshotPath}\\{romName}.1.png";
+            string path2 = $"{ScreenshotPath}\\{romName}.2.png";
+            string path3 = $"{ScreenshotPath}\\{romName}.3.png";
+
+            Bitmap scr1 = null;
+            Bitmap scr2 = null;
+            Bitmap scr3 = null;
+
+            if (File.Exists(path1))
+                scr1 = new Bitmap(path1);
+            if (File.Exists(path2))
+                scr2 = new Bitmap(path2);
+            if (File.Exists(path3))
+                scr3 = new Bitmap(path3);
+
+            int height = 0;
+            if (scr1 != null)
+                height += scr1.Height;
+            if (scr2 != null)
+                height += scr2.Height;
+            if (scr3 != null)
+                height += scr3.Height;
+
+            int width = Math.Max(scr1 != null ? scr1.Width : 0, 
+                Math.Max(scr2 != null ? scr2.Width : 0, scr3 != null ? scr3.Width : 0));
+
+            if (width == 0 || height == 0)
+            {
+                ScreenshotBox.Image = null;
+                return;
+            }
+
+            ScreenshotsImage = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(ScreenshotsImage))
+            {
+                int x = 0;
+                int y = 0;
+
+                if (scr1 != null)
+                {
+                    g.DrawImage(scr1, x, y);
+                    y += scr1.Height;
+                }
+                if (scr2 != null)
+                {
+                    g.DrawImage(scr2, x, y);
+                    y += scr2.Height;
+                }
+                if (scr3 != null)
+                {
+                    g.DrawImage(scr3, x, y);
+                    y += scr3.Height;
+                }
+            }
+
+            ScreenshotBox.SizeMode = PictureBoxSizeMode.AutoSize;
+            ScreenshotBox.Image = ScreenshotsImage;
         }
     }
 }
