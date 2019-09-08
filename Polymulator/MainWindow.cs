@@ -162,7 +162,7 @@ namespace Polymulator
                 string machinePath = parts.Length > 1 ? parts[1].Trim() : "";
                 string romPath = parts.Length > 2 ? parts[2].Trim() : "";
                 string searchSubfolders = parts.Length > 3 ? parts[3].Trim() : "";
-                string extensions = parts.Length > 4 ? parts[4].Trim() : "";
+                string[] extensions = parts.Length > 4 ? parts[4].Trim().Split('|') : null;
                 string args = parts.Length > 5 ? parts[5].Trim() : "";
 
                 if (!string.IsNullOrWhiteSpace(machineName))
@@ -184,20 +184,26 @@ namespace Polymulator
                             {
                                 List<string> files = new List<string>();
 
-                                if (extensions.Equals("") || extensions.Equals("*"))
+                                if (extensions == null || extensions[0].Equals("") || extensions[0].Equals("*"))
                                     files = Directory.EnumerateFiles(folder).ToList();
                                 else
-                                    files = Directory.EnumerateFiles(folder, extensions).ToList();
+                                {
+                                    foreach (string extension in extensions)
+                                        files.AddRange(Directory.EnumerateFiles(folder, extension).ToList());
+                                }
 
                                 config.RomFiles.AddRange(files);
                             }
                         }
                         else
                         {
-                            if (extensions.Equals("") || extensions.Equals("*"))
+                            if (extensions == null || extensions[0].Equals("") || extensions[0].Equals("*"))
                                 config.RomFiles = Directory.EnumerateFiles(romPath).ToList();
                             else
-                                config.RomFiles = Directory.EnumerateFiles(romPath, extensions).ToList();
+                            {
+                                foreach (string extension in extensions)
+                                    config.RomFiles.AddRange(Directory.EnumerateFiles(romPath, extension));
+                            }
                         }
 
                         config.RomNames.Clear();
