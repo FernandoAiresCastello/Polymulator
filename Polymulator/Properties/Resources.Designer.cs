@@ -143,6 +143,26 @@ namespace Polymulator.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap no_screenshot {
+            get {
+                object obj = ResourceManager.GetObject("no_screenshot", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rom_file {
+            get {
+                object obj = ResourceManager.GetObject("rom_file", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap slideshow_full_screen {
             get {
                 object obj = ResourceManager.GetObject("slideshow_full_screen", resourceCulture);
