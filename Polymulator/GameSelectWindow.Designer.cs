@@ -31,7 +31,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameSelectWindow));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MiReload = new System.Windows.Forms.ToolStripMenuItem();
             this.MiExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.configToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MiOpenAppSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.MiOpenAppStyleConfig = new System.Windows.Forms.ToolStripMenuItem();
+            this.MiOpenEmulatorConfig = new System.Windows.Forms.ToolStripMenuItem();
+            this.MiOpenRomConfig = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MiAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.StMachine = new System.Windows.Forms.ToolStripStatusLabel();
             this.StRomsFound = new System.Windows.Forms.ToolStripStatusLabel();
@@ -43,6 +51,8 @@
             this.GameSelector = new Polymulator.GameSelector();
             this.PnActions = new System.Windows.Forms.Panel();
             this.ActionPanel = new Polymulator.ActionPanel();
+            this.MiOpenConfigFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -61,7 +71,9 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.configToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(748, 24);
@@ -71,19 +83,83 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MiReload,
             this.MiExit});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // MiReload
+            // 
+            this.MiReload.Name = "MiReload";
+            this.MiReload.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.MiReload.Size = new System.Drawing.Size(151, 22);
+            this.MiReload.Text = "Reload";
+            this.MiReload.Click += new System.EventHandler(this.MiReload_Click);
+            // 
             // MiExit
             // 
             this.MiExit.Name = "MiExit";
-            this.MiExit.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.X)));
-            this.MiExit.Size = new System.Drawing.Size(165, 22);
+            this.MiExit.Size = new System.Drawing.Size(151, 22);
             this.MiExit.Text = "Exit";
             this.MiExit.Click += new System.EventHandler(this.MiExit_Click);
+            // 
+            // configToolStripMenuItem
+            // 
+            this.configToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MiOpenAppSettings,
+            this.MiOpenAppStyleConfig,
+            this.MiOpenEmulatorConfig,
+            this.MiOpenRomConfig,
+            this.toolStripSeparator1,
+            this.MiOpenConfigFolder});
+            this.configToolStripMenuItem.Name = "configToolStripMenuItem";
+            this.configToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
+            this.configToolStripMenuItem.Text = "Config";
+            // 
+            // MiOpenAppSettings
+            // 
+            this.MiOpenAppSettings.Name = "MiOpenAppSettings";
+            this.MiOpenAppSettings.Size = new System.Drawing.Size(210, 22);
+            this.MiOpenAppSettings.Text = "Open app settings file";
+            this.MiOpenAppSettings.Click += new System.EventHandler(this.MiOpenAppSettings_Click);
+            // 
+            // MiOpenAppStyleConfig
+            // 
+            this.MiOpenAppStyleConfig.Name = "MiOpenAppStyleConfig";
+            this.MiOpenAppStyleConfig.Size = new System.Drawing.Size(210, 22);
+            this.MiOpenAppStyleConfig.Text = "Open app style file";
+            this.MiOpenAppStyleConfig.Click += new System.EventHandler(this.MiOpenAppStyleConfig_Click);
+            // 
+            // MiOpenEmulatorConfig
+            // 
+            this.MiOpenEmulatorConfig.Name = "MiOpenEmulatorConfig";
+            this.MiOpenEmulatorConfig.Size = new System.Drawing.Size(210, 22);
+            this.MiOpenEmulatorConfig.Text = "Open emulator config file";
+            this.MiOpenEmulatorConfig.Click += new System.EventHandler(this.MiOpenEmulatorConfig_Click);
+            // 
+            // MiOpenRomConfig
+            // 
+            this.MiOpenRomConfig.Name = "MiOpenRomConfig";
+            this.MiOpenRomConfig.Size = new System.Drawing.Size(210, 22);
+            this.MiOpenRomConfig.Text = "Open ROM config file";
+            this.MiOpenRomConfig.Click += new System.EventHandler(this.MiOpenRomConfig_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MiAbout});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // MiAbout
+            // 
+            this.MiAbout.Name = "MiAbout";
+            this.MiAbout.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.MiAbout.Size = new System.Drawing.Size(135, 22);
+            this.MiAbout.Text = "About...";
+            this.MiAbout.Click += new System.EventHandler(this.MiAbout_Click);
             // 
             // statusStrip1
             // 
@@ -214,6 +290,20 @@
             this.ActionPanel.Padding = new System.Windows.Forms.Padding(2, 5, 2, 2);
             this.ActionPanel.Size = new System.Drawing.Size(161, 343);
             this.ActionPanel.TabIndex = 0;
+            this.ActionPanel.Visible = false;
+            this.ActionPanel.Window = null;
+            // 
+            // MiOpenConfigFolder
+            // 
+            this.MiOpenConfigFolder.Name = "MiOpenConfigFolder";
+            this.MiOpenConfigFolder.Size = new System.Drawing.Size(210, 22);
+            this.MiOpenConfigFolder.Text = "Open config files folder";
+            this.MiOpenConfigFolder.Click += new System.EventHandler(this.MiOpenConfigFolder_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(207, 6);
             // 
             // GameSelectWindow
             // 
@@ -229,6 +319,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "POLYMULATOR";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameSelectWindow_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
@@ -265,5 +356,15 @@
         private System.Windows.Forms.ToolStripStatusLabel StMachine;
         private System.Windows.Forms.ToolStripStatusLabel StRomsFound;
         public ActionPanel ActionPanel;
+        private System.Windows.Forms.ToolStripMenuItem configToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem MiOpenEmulatorConfig;
+        private System.Windows.Forms.ToolStripMenuItem MiOpenRomConfig;
+        private System.Windows.Forms.ToolStripMenuItem MiOpenAppStyleConfig;
+        private System.Windows.Forms.ToolStripMenuItem MiReload;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem MiAbout;
+        private System.Windows.Forms.ToolStripMenuItem MiOpenAppSettings;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem MiOpenConfigFolder;
     }
 }

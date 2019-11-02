@@ -14,42 +14,51 @@ namespace Polymulator
 {
     public partial class GameSelectWindow : Form
     {
-        private List<Emulator> Emulators;
-        private Emulator SelectedEmulator;
+        public List<Emulator> Emulators { get; private set; }
+        public Emulator SelectedEmulator { get; private set; }
 
         public GameSelectWindow()
         {
-            Hide();
             InitializeComponent();
             GameSelector.Window = this;
             ActionPanel.Window = this;
-
-            LsEmulators.Font = ApplicationStyle.MainFont;
-            LsEmulators.ForeColor = ApplicationStyle.MainForeColor;
-            LsEmulators.BackColor = ApplicationStyle.MainBackColor;
-            PnLsEmulators.BackColor = ApplicationStyle.MainBackColor;
-            GameSelector.BackColor = ApplicationStyle.MainBackColor;
-            GameSelector.ForeColor = ApplicationStyle.MainForeColor;
-            ActionPanel.BackColor = ApplicationStyle.MainBackColor;
-            ActionPanel.ForeColor = ApplicationStyle.MainForeColor;
-            PnGames.BackColor = ApplicationStyle.MainBackColor;
-
             Reload();
-            Show();
         }
 
         private void Reload()
         {
+            Hide();
+
             try
             {
-                Emulators = ApplicationConfig.LoadEmulators();
+                SaveRomInfoForAllEmulators();
+                ConfigFileLoader.LoadAppSettings();
+                ConfigFileLoader.LoadAppStyle();
+                Emulators = ConfigFileLoader.LoadEmulators();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(this, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+            UpdateStyle();
             UpdateMachineList();
+            Show();
+        }
+
+        public void UpdateStyle()
+        {
+            LsEmulators.Font = ApplicationStyle.MainFont;
+            LsEmulators.ForeColor = ApplicationStyle.MainForeColor;
+            LsEmulators.BackColor = ApplicationStyle.MainBackColor;
+            PnLsEmulators.BackColor = ApplicationStyle.MainBackColor;
+            PnGames.BackColor = ApplicationStyle.MainBackColor;
+            GameSelector.BackColor = ApplicationStyle.MainBackColor;
+            GameSelector.ForeColor = ApplicationStyle.MainForeColor;
+            PnActions.BackColor = ApplicationStyle.MainBackColor;
+            ActionPanel.BackColor = ApplicationStyle.MainBackColor;
+            ActionPanel.ForeColor = ApplicationStyle.MainForeColor;
+            PnGames.BackColor = ApplicationStyle.MainBackColor;
         }
 
         private void UpdateMachineList()
@@ -60,6 +69,21 @@ namespace Polymulator
                 machines.Add(config.MachineName);
 
             LsEmulators.DataSource = machines;
+        }
+
+        public void LaunchGame(GameRom rom)
+        {
+            try
+            {
+                string args = "\"" + rom.Path + "\"";
+                Process.Start(SelectedEmulator.EmulatorPath, args);
+                rom.LastPlayedDateTime = DateTime.Now;
+                ActionPanel.UpdatePanel();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void MiExit_Click(object sender, EventArgs e)
@@ -78,7 +102,7 @@ namespace Polymulator
                 return;
 
             SelectedEmulator = Emulators[index];
-            ApplicationConfig.LoadRomInfo(SelectedEmulator);
+            ConfigFileLoader.LoadRomInfo(SelectedEmulator);
             StMachine.Text = SelectedEmulator.MachineName;
             StRomsFound.Text = SelectedEmulator.Roms.Count + " games found.";
             GameSelector.UpdateGames(SelectedEmulator);
@@ -97,6 +121,54 @@ namespace Polymulator
         public void RedrawActionPanel(GameSelectorItem item)
         {
             ActionPanel.UpdatePanel(item);
+        }
+
+        private void GameSelectWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveRomInfoForAllEmulators();
+            Application.Exit();
+        }
+
+        private void MiOpenAppSettings_Click(object sender, EventArgs e)
+        {
+            Process.Start(ConfigFileLoader.SettingsFile);
+        }
+
+        private void MiOpenEmulatorConfig_Click(object sender, EventArgs e)
+        {
+            Process.Start(ConfigFileLoader.EmulatorConfigFile);
+        }
+
+        private void MiOpenRomConfig_Click(object sender, EventArgs e)
+        {
+            Process.Start(ConfigFileLoader.RomInfoFile);
+        }
+
+        private void MiOpenAppStyleConfig_Click(object sender, EventArgs e)
+        {
+            Process.Start(ConfigFileLoader.AppStyleConfigFile);
+        }
+
+        private void MiOpenConfigFolder_Click(object sender, EventArgs e)
+        {
+            Process.Start(ConfigFileLoader.BaseFolder);
+        }
+
+        private void MiReload_Click(object sender, EventArgs e)
+        {
+            Reload();
+        }
+
+        private void MiAbout_Click(object sender, EventArgs e)
+        {
+            string msg = "POLYMULATOR © 2019\n\nDeveloped by Fernando Aires Castello";
+
+            MessageBox.Show(this, msg, "About Polymulator", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        public void SaveRomInfoForAllEmulators()
+        {
+            ConfigFileLoader.SaveRomInfo(Emulators);
         }
     }
 }

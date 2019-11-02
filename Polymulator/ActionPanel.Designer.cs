@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.LbFileSize = new System.Windows.Forms.Label();
+            this.LbInfo = new System.Windows.Forms.Label();
             this.LbTitle = new System.Windows.Forms.Label();
             this.PbScreenshot = new System.Windows.Forms.PictureBox();
             this.PnlActionLinks = new System.Windows.Forms.FlowLayoutPanel();
@@ -40,6 +40,9 @@
             this.LnkOpenFileLocation = new System.Windows.Forms.LinkLabel();
             this.PnNotes = new System.Windows.Forms.Panel();
             this.TxtNotes = new System.Windows.Forms.TextBox();
+            this.LnkRemoveCoverArt = new System.Windows.Forms.LinkLabel();
+            this.LnkRemoveScreenshot = new System.Windows.Forms.LinkLabel();
+            this.LnkForgetLastPlayed = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbScreenshot)).BeginInit();
             this.PnlActionLinks.SuspendLayout();
@@ -50,7 +53,7 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.LbFileSize, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.LbInfo, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.LbTitle, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.PbScreenshot, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.PnlActionLinks, 0, 3);
@@ -67,32 +70,35 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(225, 460);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // LbFileSize
+            // LbInfo
             // 
-            this.LbFileSize.AutoSize = true;
-            this.LbFileSize.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LbFileSize.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.LbFileSize.Location = new System.Drawing.Point(3, 13);
-            this.LbFileSize.Name = "LbFileSize";
-            this.LbFileSize.Size = new System.Drawing.Size(219, 13);
-            this.LbFileSize.TabIndex = 3;
-            this.LbFileSize.Text = "File size";
+            this.LbInfo.AutoSize = true;
+            this.LbInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LbInfo.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.LbInfo.Location = new System.Drawing.Point(3, 18);
+            this.LbInfo.Name = "LbInfo";
+            this.LbInfo.Size = new System.Drawing.Size(219, 13);
+            this.LbInfo.TabIndex = 3;
+            this.LbInfo.Text = "Information";
+            this.LbInfo.UseMnemonic = false;
             // 
             // LbTitle
             // 
             this.LbTitle.AutoSize = true;
             this.LbTitle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LbTitle.Location = new System.Drawing.Point(3, 0);
+            this.LbTitle.Margin = new System.Windows.Forms.Padding(3, 0, 3, 5);
             this.LbTitle.Name = "LbTitle";
             this.LbTitle.Size = new System.Drawing.Size(219, 13);
             this.LbTitle.TabIndex = 0;
             this.LbTitle.Text = "Game Title";
+            this.LbTitle.UseMnemonic = false;
             // 
             // PbScreenshot
             // 
             this.PbScreenshot.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PbScreenshot.Image = global::Polymulator.Properties.Resources.no_screenshot;
-            this.PbScreenshot.Location = new System.Drawing.Point(3, 36);
+            this.PbScreenshot.Location = new System.Drawing.Point(3, 41);
             this.PbScreenshot.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
             this.PbScreenshot.Name = "PbScreenshot";
             this.PbScreenshot.Size = new System.Drawing.Size(219, 130);
@@ -106,10 +112,13 @@
             this.PnlActionLinks.Controls.Add(this.LnkAddFavorite);
             this.PnlActionLinks.Controls.Add(this.LnkSetCoverArt);
             this.PnlActionLinks.Controls.Add(this.LnkSetScreenshot);
+            this.PnlActionLinks.Controls.Add(this.LnkRemoveCoverArt);
+            this.PnlActionLinks.Controls.Add(this.LnkRemoveScreenshot);
             this.PnlActionLinks.Controls.Add(this.LnkOpenFileLocation);
+            this.PnlActionLinks.Controls.Add(this.LnkForgetLastPlayed);
             this.PnlActionLinks.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PnlActionLinks.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.PnlActionLinks.Location = new System.Drawing.Point(3, 179);
+            this.PnlActionLinks.Location = new System.Drawing.Point(3, 184);
             this.PnlActionLinks.Name = "PnlActionLinks";
             this.PnlActionLinks.Size = new System.Drawing.Size(219, 100);
             this.PnlActionLinks.TabIndex = 2;
@@ -161,7 +170,7 @@
             // LnkOpenFileLocation
             // 
             this.LnkOpenFileLocation.AutoSize = true;
-            this.LnkOpenFileLocation.Location = new System.Drawing.Point(3, 52);
+            this.LnkOpenFileLocation.Location = new System.Drawing.Point(3, 78);
             this.LnkOpenFileLocation.Name = "LnkOpenFileLocation";
             this.LnkOpenFileLocation.Size = new System.Drawing.Size(96, 13);
             this.LnkOpenFileLocation.TabIndex = 3;
@@ -174,10 +183,10 @@
             this.PnNotes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PnNotes.Controls.Add(this.TxtNotes);
             this.PnNotes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PnNotes.Location = new System.Drawing.Point(3, 285);
+            this.PnNotes.Location = new System.Drawing.Point(3, 290);
             this.PnNotes.Name = "PnNotes";
             this.PnNotes.Padding = new System.Windows.Forms.Padding(5);
-            this.PnNotes.Size = new System.Drawing.Size(219, 172);
+            this.PnNotes.Size = new System.Drawing.Size(219, 167);
             this.PnNotes.TabIndex = 4;
             // 
             // TxtNotes
@@ -188,8 +197,42 @@
             this.TxtNotes.Location = new System.Drawing.Point(5, 5);
             this.TxtNotes.Multiline = true;
             this.TxtNotes.Name = "TxtNotes";
-            this.TxtNotes.Size = new System.Drawing.Size(207, 160);
+            this.TxtNotes.Size = new System.Drawing.Size(207, 155);
             this.TxtNotes.TabIndex = 5;
+            this.TxtNotes.TextChanged += new System.EventHandler(this.TxtNotes_TextChanged);
+            // 
+            // LnkRemoveCoverArt
+            // 
+            this.LnkRemoveCoverArt.AutoSize = true;
+            this.LnkRemoveCoverArt.Location = new System.Drawing.Point(3, 52);
+            this.LnkRemoveCoverArt.Name = "LnkRemoveCoverArt";
+            this.LnkRemoveCoverArt.Size = new System.Drawing.Size(94, 13);
+            this.LnkRemoveCoverArt.TabIndex = 5;
+            this.LnkRemoveCoverArt.TabStop = true;
+            this.LnkRemoveCoverArt.Text = "Remove Cover Art";
+            this.LnkRemoveCoverArt.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LnkRemoveCoverArt_LinkClicked);
+            // 
+            // LnkRemoveScreenshot
+            // 
+            this.LnkRemoveScreenshot.AutoSize = true;
+            this.LnkRemoveScreenshot.Location = new System.Drawing.Point(3, 65);
+            this.LnkRemoveScreenshot.Name = "LnkRemoveScreenshot";
+            this.LnkRemoveScreenshot.Size = new System.Drawing.Size(104, 13);
+            this.LnkRemoveScreenshot.TabIndex = 6;
+            this.LnkRemoveScreenshot.TabStop = true;
+            this.LnkRemoveScreenshot.Text = "Remove Screenshot";
+            this.LnkRemoveScreenshot.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LnkRemoveScreenshot_LinkClicked);
+            // 
+            // LnkForgetLastPlayed
+            // 
+            this.LnkForgetLastPlayed.AutoSize = true;
+            this.LnkForgetLastPlayed.Location = new System.Drawing.Point(113, 0);
+            this.LnkForgetLastPlayed.Name = "LnkForgetLastPlayed";
+            this.LnkForgetLastPlayed.Size = new System.Drawing.Size(95, 13);
+            this.LnkForgetLastPlayed.TabIndex = 7;
+            this.LnkForgetLastPlayed.TabStop = true;
+            this.LnkForgetLastPlayed.Text = "Forget Last Played";
+            this.LnkForgetLastPlayed.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LnkForgetLastPlayed_LinkClicked);
             // 
             // ActionPanel
             // 
@@ -220,8 +263,11 @@
         private System.Windows.Forms.LinkLabel LnkSetCoverArt;
         private System.Windows.Forms.LinkLabel LnkOpenFileLocation;
         private System.Windows.Forms.LinkLabel LnkSetScreenshot;
-        private System.Windows.Forms.Label LbFileSize;
+        private System.Windows.Forms.Label LbInfo;
         private System.Windows.Forms.Panel PnNotes;
-        private System.Windows.Forms.TextBox TxtNotes;
+        public System.Windows.Forms.TextBox TxtNotes;
+        private System.Windows.Forms.LinkLabel LnkRemoveCoverArt;
+        private System.Windows.Forms.LinkLabel LnkRemoveScreenshot;
+        private System.Windows.Forms.LinkLabel LnkForgetLastPlayed;
     }
 }

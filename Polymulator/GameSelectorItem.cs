@@ -45,6 +45,12 @@ namespace Polymulator
             SelectItem();
         }
 
+        private void Item_DoubleClick(object sender, MouseEventArgs e)
+        {
+            SelectItem();
+            LaunchSelectedItem();
+        }
+
         public void DeselectItem()
         {
             Selected = false;
@@ -53,10 +59,18 @@ namespace Polymulator
 
         public void SelectItem()
         {
-            Selector.DeselectAll();
-            Selected = true;
-            UpdateColors();
-            Selector.UpdateActionPanel(this);
+            if (!Selected)
+            {
+                Selector.DeselectAll();
+                Selected = true;
+                UpdateColors();
+                Selector.UpdateActionPanel(this);
+            }
+        }
+
+        public void LaunchSelectedItem()
+        {
+            Selector.Window.LaunchGame(Rom);
         }
 
         private void UpdateColors()
@@ -67,7 +81,7 @@ namespace Polymulator
 
         public override void Refresh()
         {
-            LbTitle.Text = Rom.File;
+            LbTitle.Text = Rom.FriendlyTitle;
             PbCoverArt.Image = !string.IsNullOrWhiteSpace(Rom.CoverArtFile) ? Image.FromFile(Rom.CoverArtFile) : NoCoverArt;
             base.Refresh();
         }

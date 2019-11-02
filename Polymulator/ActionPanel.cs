@@ -19,15 +19,86 @@ namespace Polymulator
         private GameSelectorItem Item;
         private readonly Image NoScreenshot = Properties.Resources.no_screenshot;
 
+        public override Color BackColor
+        {
+            get => base.BackColor;
+            set
+            {
+                base.BackColor = value;
+                TxtNotes.BackColor = value;
+                PnNotes.BackColor = value;
+            }
+        }
+
+        public override Color ForeColor
+        {
+            get => base.ForeColor;
+            set
+            {
+                base.ForeColor = value;
+                TxtNotes.ForeColor = value;
+                PnNotes.ForeColor = value;
+            }
+        }
+
         public ActionPanel()
         {
             InitializeComponent();
+            UpdatePanel(null);
+        }
+
+        public void UpdatePanel(GameSelectorItem item)
+        {
+            if (item == null)
+                Hide();
+            else
+                Show();
+
+            Item = item;
+            UpdatePanel();
+        }
+
+        public void UpdatePanel()
+        {
+            if (Item != null)
+            {
+                GameRom rom = Item.Rom;
+
+                SetInfo
+                (
+                    $"Filename: {rom.File}", 
+                    $"Size: {rom.Size}",
+                    $"Last played: {rom.LastPlayed}"
+                );
+
+                LbTitle.Text = rom.FriendlyTitle;
+                TxtNotes.Text = rom.Notes;
+                PbScreenshot.Image = !string.IsNullOrWhiteSpace(rom.ScreenshotFile) ? 
+                    Image.FromFile(rom.ScreenshotFile) : NoScreenshot;
+            }
+
+            UpdateStyle();
+        }
+
+        private void SetInfo(params string[] infos)
+        {
+            StringBuilder text = new StringBuilder();
+
+            foreach (string info in infos)
+                text.Append(info + "\n");
+
+            LbInfo.Text = text.ToString();
+        }
+
+        public void UpdateStyle()
+        {
             Font = ApplicationStyle.MainFont;
             ForeColor = ApplicationStyle.MainForeColor;
-            LbFileSize.ForeColor = ApplicationStyle.SecondaryForeColor;
+            LbInfo.ForeColor = ApplicationStyle.SecondaryForeColor;
             PnNotes.BackColor = ApplicationStyle.MainBackColor;
             TxtNotes.BackColor = ApplicationStyle.MainBackColor;
             TxtNotes.ForeColor = ApplicationStyle.MainForeColor;
+            TxtNotes.Font = new Font(TxtNotes.Font.FontFamily, ApplicationStyle.NotesFontSize, TxtNotes.Font.Style);
 
             foreach (Control ctl in PnlActionLinks.Controls)
             {
@@ -40,17 +111,20 @@ namespace Polymulator
             }
         }
 
-        public void UpdatePanel(GameSelectorItem item)
+        private void TxtNotes_TextChanged(object sender, EventArgs e)
         {
-            Item = item;
-            LbTitle.Text = item.Rom.File;
-            LbFileSize.Text = "File size: " + item.Rom.Size;
-            PbScreenshot.Image = !string.IsNullOrWhiteSpace(item.Rom.ScreenshotFile) ? Image.FromFile(item.Rom.ScreenshotFile) : NoScreenshot;
+            Item.Rom.Notes = TxtNotes.Text;
+            Window.SaveRomInfoForAllEmulators();
         }
 
         private void LnkPlay_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // todo
+            Window.LaunchGame(Item.Rom);
+        }
+
+        private void LnkOpenFileLocation_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(new FileInfo(Item.Rom.Path).DirectoryName);
         }
 
         private void LnkAddFavorite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -66,7 +140,8 @@ namespace Polymulator
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 Item.Rom.CoverArtFile = dialog.FileName;
-                Window.RedrawActionPanel(Item);
+                Window.SaveRomInfoForAllEmulators();
+                Window.RedrawGameSelectorItem(Item);
             }
         }
 
@@ -78,13 +153,49 @@ namespace Polymulator
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 Item.Rom.ScreenshotFile = dialog.FileName;
+                Window.SaveRomInfoForAllEmulators();
+                UpdatePanel();
+            }
+        }
+
+        private void LnkRemoveCoverArt_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            DialogResult result = MessageBox.Show(this, 
+                "This will remove the cover art. Are you sure?", "Please confirm", 
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                Item.Rom.CoverArtFile = null;
                 Window.RedrawGameSelectorItem(Item);
             }
         }
 
-        private void LnkOpenFileLocation_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LnkRemoveScreenshot_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(new FileInfo(Item.Rom.Path).DirectoryName);
+            DialogResult result = MessageBox.Show(this,
+                "This will remove the screenshot. Are you sure?", "Please confirm",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                Item.Rom.ScreenshotFile = null;
+                UpdatePanel();
+            }
+        }
+
+        private void LnkForgetLastPlayed_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            DialogResult result = MessageBox.Show(this, 
+                "This will forget the last time played. Are you sure?", "Please confirm", 
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                Item.Rom.LastPlayedDateTime = null;
+                Window.SaveRomInfoForAllEmulators();
+                UpdatePanel();
+            }
         }
     }
 }

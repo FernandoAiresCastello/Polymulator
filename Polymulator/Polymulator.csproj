@@ -55,7 +55,8 @@
     <Compile Include="ActionPanel.Designer.cs">
       <DependentUpon>ActionPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="ApplicationConfig.cs" />
+    <Compile Include="ApplicationSettings.cs" />
+    <Compile Include="ConfigFileLoader.cs" />
     <Compile Include="ApplicationStyle.cs" />
     <Compile Include="Emulator.cs" />
     <Compile Include="GameRom.cs" />

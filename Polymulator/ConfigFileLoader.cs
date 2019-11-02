@@ -4,20 +4,68 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Polymulator
 {
-    public static class ApplicationConfig
+    public static class ConfigFileLoader
     {
-        private static readonly string emulatorConfigFile = "emulators.ini";
-        private static readonly string romInfoFile = "roms.ini";
+        public static readonly string BaseFolder = Application.StartupPath;
+        public static readonly string SettingsFile = "settings.ini";
+        public static readonly string AppStyleConfigFile = "style.ini";
+        public static readonly string EmulatorConfigFile = "emulators.ini";
+        public static readonly string RomInfoFile = "roms.ini";
+
+        public static void LoadAppSettings()
+        {
+            if (!File.Exists(SettingsFile))
+                throw new FileNotFoundException("Settings file " + SettingsFile + " not found.");
+
+            Dictionary<string, string> settings = new Dictionary<string, string>();
+            string[] lines = File.ReadAllLines(SettingsFile);
+
+            foreach (string line in lines)
+            {
+                if (line.Trim().StartsWith("#"))
+                    continue;
+
+                string[] parts = line.Trim().Split('=');
+                string name = parts[0].Trim();
+                string value = parts[1].Trim();
+                settings[name] = value;
+            }
+
+            ApplicationSettings.Apply(settings);
+        }
+
+        public static void LoadAppStyle()
+        {
+            if (!File.Exists(AppStyleConfigFile))
+                throw new FileNotFoundException("Application style config file " + AppStyleConfigFile + " not found.");
+
+            Dictionary<string, string> style = new Dictionary<string, string>();
+            string[] lines = File.ReadAllLines(AppStyleConfigFile);
+
+            foreach (string line in lines)
+            {
+                if (line.Trim().StartsWith("#"))
+                    continue;
+
+                string[] parts = line.Trim().Split('=');
+                string name = parts[0].Trim();
+                string value = parts[1].Trim();
+                style[name] = value;
+            }
+
+            ApplicationStyle.Apply(style);
+        }
 
         public static void LoadRomInfo(Emulator emulator)
         {
-            if (!File.Exists(romInfoFile))
-                throw new FileNotFoundException("ROM info file " + romInfoFile + " not found.");
+            if (!File.Exists(RomInfoFile))
+                throw new FileNotFoundException("ROM info file " + RomInfoFile + " not found.");
 
-            string[] lines = File.ReadAllLines(romInfoFile);
+            string[] lines = File.ReadAllLines(RomInfoFile);
 
             foreach (string line in lines)
             {
@@ -25,6 +73,8 @@ namespace Polymulator
                 string romPath = parts.Length > 0 ? parts[0].Trim() : "";
                 string coverArtFile = parts.Length > 1 ? parts[1].Trim() : null;
                 string screenshotFile = parts.Length > 2 ? parts[2].Trim() : null;
+                string notes = parts.Length > 3 ? parts[3].Trim() : null;
+                string lastPlayed = parts.Length > 4 ? parts[4].Trim() : null;
 
                 foreach (GameRom rom in emulator.Roms)
                 {
@@ -32,19 +82,44 @@ namespace Polymulator
                     {
                         rom.ScreenshotFile = screenshotFile;
                         rom.CoverArtFile = coverArtFile;
+                        rom.Notes = notes;
+                        if (!string.IsNullOrWhiteSpace(lastPlayed))
+                            rom.LastPlayedDateTime = DateTime.Parse(lastPlayed);
                     }
                 }
             }
         }
 
+        public static void SaveRomInfo(List<Emulator> emulators)
+        {
+            if (emulators == null)
+                return;
+
+            if (!File.Exists(RomInfoFile))
+                File.Create(RomInfoFile);
+
+            List<string> lines = new List<string>();
+
+            foreach (Emulator emulator in emulators)
+            {
+                foreach (GameRom rom in emulator.Roms)
+                {
+                    string lastPlayed = rom.LastPlayedDateTime.HasValue ? rom.LastPlayed : null;
+                    lines.Add($"{rom.Path};{rom.CoverArtFile};{rom.ScreenshotFile};{rom.Notes};{lastPlayed}");
+                }
+            }
+
+            File.WriteAllLines(RomInfoFile, lines.ToArray());
+        }
+
         public static List<Emulator> LoadEmulators()
         {
-            if (!File.Exists(emulatorConfigFile))
-                throw new FileNotFoundException("Emulator config file " + emulatorConfigFile + " not found.");
+            if (!File.Exists(EmulatorConfigFile))
+                throw new FileNotFoundException("Emulator config file " + EmulatorConfigFile + " not found.");
 
             List<Emulator> emulators = new List<Emulator>();
 
-            string[] lines = File.ReadAllLines(emulatorConfigFile);
+            string[] lines = File.ReadAllLines(EmulatorConfigFile);
 
             foreach (string line in lines)
             {
