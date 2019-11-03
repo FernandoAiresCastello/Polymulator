@@ -12,8 +12,11 @@ namespace Polymulator
 {
     public partial class GameSelector : UserControl
     {
-        public int Columns { set; get; } = 5;
         public GameSelectWindow Window { set; get; }
+        public Emulator Emulator { set; get; }
+        public int Page { set; get; }
+        public int Pages { set; get; }
+        public GameSelectorItem SelectedItem { set; get; }
 
         private List<GameSelectorItem> Items = new List<GameSelectorItem>();
 
@@ -25,20 +28,48 @@ namespace Polymulator
         {
             Window = window;
             InitializeComponent();
-            TbGames.ColumnCount = Columns;
+            UpdateStyle();
+            TbGames.ColumnCount = ApplicationSettings.GameSelectorColumns;
             TbGames.RowCount = 0;
         }
 
-        public void UpdateGames(Emulator config)
+        public void UpdateStyle()
         {
-            Hide();
+            BackColor = ApplicationStyle.MainBackColor;
+            ForeColor = ApplicationStyle.MainForeColor;
+            TopPanel.Font = ApplicationStyle.MainFont;
+            TopPanel.ForeColor = ApplicationStyle.MainForeColor;
+            LbRomsFound.ForeColor = ApplicationStyle.SecondaryForeColor;
+            LnkPrevPage.LinkColor = ApplicationStyle.LinkForeColor;
+            LnkNextPage.LinkColor = ApplicationStyle.LinkForeColor;
+            LnkPrevPage.ActiveLinkColor = ApplicationStyle.ActiveLinkForeColor;
+            LnkNextPage.ActiveLinkColor = ApplicationStyle.ActiveLinkForeColor;
+        }
 
+        public void UpdateGames(Emulator emulator)
+        {
+            if (emulator != Emulator)
+                Page = 0;
+
+            Hide();
+            Emulator = emulator;
+            int maxGamesPerPage = ApplicationSettings.GameSelectorMaxGamesPerPage;
+
+            TbGames.ColumnCount = ApplicationSettings.GameSelectorColumns;
             TbGames.Controls.Clear();
-            TbGames.RowCount = config.Roms.Count / Columns;
+            TbGames.RowCount = emulator.Roms.Count / TbGames.ColumnCount;
+
+            Pages = emulator.Roms.Count / maxGamesPerPage + 1;
 
             Items.Clear();
-            foreach (GameRom rom in config.Roms)
+
+            for (int i = Page * maxGamesPerPage; i < emulator.Roms.Count; i++)
+            {
+                GameRom rom = emulator.Roms[i];
                 Items.Add(new GameSelectorItem(this, rom));
+                if (Items.Count >= maxGamesPerPage)
+                    break;
+            }
 
             TbGames.Controls.AddRange(Items.ToArray());
 
@@ -47,8 +78,24 @@ namespace Polymulator
             foreach (ColumnStyle style in TbGames.ColumnStyles)
                 style.SizeType = SizeType.AutoSize;
 
+            UpdateInfo(emulator);
             Show();
             Refresh();
+
+            if (Items.Count > 0)
+                Items[0].SelectItem();
+        }
+
+        public void UpdateInfo(Emulator emulator)
+        {
+            LbMachine.Text = emulator.MachineName;
+            LbRomsFound.Text = emulator.Roms.Count + " games found";
+            LbPage.Text = Pages > 1 ? $"Page {Page + 1} of {Pages}" : "";
+
+            if (Pages > 1)
+                PnPageLinks.Show();
+            else
+                PnPageLinks.Hide();
         }
 
         public void UpdateActionPanel(GameSelectorItem selectedItem)
@@ -65,6 +112,47 @@ namespace Polymulator
         public void RedrawItem(GameSelectorItem item)
         {
             item.Refresh();
+        }
+
+        public void NextPage()
+        {
+            if (Pages > 1)
+            {
+                if (Page < Pages - 1)
+                    Page++;
+                else
+                    Page = 0;
+
+                UpdateGames();
+            }
+        }
+
+        public void PrevPage()
+        {
+            if (Pages > 1)
+            {
+                if (Page > 0)
+                    Page--;
+                else
+                    Page = Pages - 1;
+
+                UpdateGames();
+            }
+        }
+
+        private void UpdateGames()
+        {
+            UpdateGames(Emulator);
+        }
+
+        private void LnkPrevPage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            PrevPage();
+        }
+
+        private void LnkNextPage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            NextPage();
         }
     }
 }

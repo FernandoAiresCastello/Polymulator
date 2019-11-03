@@ -114,7 +114,6 @@ namespace Polymulator
         private void TxtNotes_TextChanged(object sender, EventArgs e)
         {
             Item.Rom.Notes = TxtNotes.Text;
-            Window.SaveRomInfoForAllEmulators();
         }
 
         private void LnkPlay_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -140,7 +139,6 @@ namespace Polymulator
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 Item.Rom.CoverArtFile = dialog.FileName;
-                Window.SaveRomInfoForAllEmulators();
                 Window.RedrawGameSelectorItem(Item);
             }
         }
@@ -153,7 +151,6 @@ namespace Polymulator
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 Item.Rom.ScreenshotFile = dialog.FileName;
-                Window.SaveRomInfoForAllEmulators();
                 UpdatePanel();
             }
         }
@@ -193,7 +190,6 @@ namespace Polymulator
             if (result == DialogResult.Yes)
             {
                 Item.Rom.LastPlayedDateTime = null;
-                Window.SaveRomInfoForAllEmulators();
                 UpdatePanel();
             }
         }

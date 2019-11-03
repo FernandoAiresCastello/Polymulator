@@ -57,7 +57,7 @@ namespace Polymulator
         private string GetFriendlyTitle()
         {
             string title = System.IO.Path.GetFileNameWithoutExtension(Path);
-            return Regex.Replace(title, ApplicationSettings.FriendlyTitleRegex, "");
+            return Regex.Replace(title, ApplicationSettings.FriendlyTitleRegex, "").Trim();
         }
     }
 }

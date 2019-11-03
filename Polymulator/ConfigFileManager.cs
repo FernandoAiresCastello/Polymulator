@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Polymulator
 {
-    public static class ConfigFileLoader
+    public static class ConfigFileManager
     {
         public static readonly string BaseFolder = Application.StartupPath;
         public static readonly string SettingsFile = "settings.ini";
@@ -58,58 +58,6 @@ namespace Polymulator
             }
 
             ApplicationStyle.Apply(style);
-        }
-
-        public static void LoadRomInfo(Emulator emulator)
-        {
-            if (!File.Exists(RomInfoFile))
-                throw new FileNotFoundException("ROM info file " + RomInfoFile + " not found.");
-
-            string[] lines = File.ReadAllLines(RomInfoFile);
-
-            foreach (string line in lines)
-            {
-                string[] parts = line.Trim().Split(';');
-                string romPath = parts.Length > 0 ? parts[0].Trim() : "";
-                string coverArtFile = parts.Length > 1 ? parts[1].Trim() : null;
-                string screenshotFile = parts.Length > 2 ? parts[2].Trim() : null;
-                string notes = parts.Length > 3 ? parts[3].Trim() : null;
-                string lastPlayed = parts.Length > 4 ? parts[4].Trim() : null;
-
-                foreach (GameRom rom in emulator.Roms)
-                {
-                    if (rom.Path.Equals(romPath))
-                    {
-                        rom.ScreenshotFile = screenshotFile;
-                        rom.CoverArtFile = coverArtFile;
-                        rom.Notes = notes;
-                        if (!string.IsNullOrWhiteSpace(lastPlayed))
-                            rom.LastPlayedDateTime = DateTime.Parse(lastPlayed);
-                    }
-                }
-            }
-        }
-
-        public static void SaveRomInfo(List<Emulator> emulators)
-        {
-            if (emulators == null)
-                return;
-
-            if (!File.Exists(RomInfoFile))
-                File.Create(RomInfoFile);
-
-            List<string> lines = new List<string>();
-
-            foreach (Emulator emulator in emulators)
-            {
-                foreach (GameRom rom in emulator.Roms)
-                {
-                    string lastPlayed = rom.LastPlayedDateTime.HasValue ? rom.LastPlayed : null;
-                    lines.Add($"{rom.Path};{rom.CoverArtFile};{rom.ScreenshotFile};{rom.Notes};{lastPlayed}");
-                }
-            }
-
-            File.WriteAllLines(RomInfoFile, lines.ToArray());
         }
 
         public static List<Emulator> LoadEmulators()
@@ -179,6 +127,52 @@ namespace Polymulator
             }
 
             return emulators;
+        }
+
+        public static void LoadRomInfo(List<GameRom> roms)
+        {
+            if (!File.Exists(RomInfoFile))
+                throw new FileNotFoundException("ROM info file " + RomInfoFile + " not found.");
+
+            string[] lines = File.ReadAllLines(RomInfoFile);
+
+            foreach (string line in lines)
+            {
+                string[] parts = line.Trim().Split(';');
+                string romPath = parts.Length > 0 ? parts[0].Trim() : "";
+                string coverArtFile = parts.Length > 1 ? parts[1].Trim() : null;
+                string screenshotFile = parts.Length > 2 ? parts[2].Trim() : null;
+                string notes = parts.Length > 3 ? parts[3].Trim() : null;
+                string lastPlayed = parts.Length > 4 ? parts[4].Trim() : null;
+
+                foreach (GameRom rom in roms)
+                {
+                    if (rom.Path.Equals(romPath))
+                    {
+                        rom.ScreenshotFile = screenshotFile;
+                        rom.CoverArtFile = coverArtFile;
+                        rom.Notes = notes;
+                        if (!string.IsNullOrWhiteSpace(lastPlayed))
+                            rom.LastPlayedDateTime = DateTime.Parse(lastPlayed);
+                    }
+                }
+            }
+        }
+
+        public static void SaveRomInfo(List<GameRom> roms)
+        {
+            if (!File.Exists(RomInfoFile))
+                File.Create(RomInfoFile);
+
+            List<string> lines = new List<string>();
+
+            foreach (GameRom rom in roms)
+            {
+                string lastPlayed = rom.LastPlayedDateTime.HasValue ? rom.LastPlayed : null;
+                lines.Add($"{rom.Path};{rom.CoverArtFile};{rom.ScreenshotFile};{rom.Notes};{lastPlayed}");
+            }
+
+            File.WriteAllLines(RomInfoFile, lines.ToArray());
         }
     }
 }

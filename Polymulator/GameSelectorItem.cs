@@ -32,6 +32,15 @@ namespace Polymulator
             Margin = new Padding(5);
             LbTitle.Font = ApplicationStyle.MainFont;
             SetRom(rom);
+            PreviewKeyDown += GameSelectorItem_PreviewKeyDown;
+        }
+
+        private void GameSelectorItem_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.PageDown)
+                Selector.NextPage();
+            if (e.KeyCode == Keys.PageUp)
+                Selector.PrevPage();
         }
 
         public void SetRom(GameRom rom)
@@ -59,6 +68,9 @@ namespace Polymulator
 
         public void SelectItem()
         {
+            Focus();
+            Selector.SelectedItem = this;
+
             if (!Selected)
             {
                 Selector.DeselectAll();
