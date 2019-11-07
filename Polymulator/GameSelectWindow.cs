@@ -17,6 +17,7 @@ namespace Polymulator
         public List<Emulator> Emulators { get; private set; }
         public Emulator SelectedEmulator { get; private set; }
         public List<GameRom> AllRoms => GetAllRoms();
+        public GameSelector Selector => GameSelector;
 
         public GameSelectWindow()
         {

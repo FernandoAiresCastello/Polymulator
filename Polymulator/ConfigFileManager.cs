@@ -144,6 +144,7 @@ namespace Polymulator
                 string screenshotFile = parts.Length > 2 ? parts[2].Trim() : null;
                 string notes = parts.Length > 3 ? parts[3].Trim() : null;
                 string lastPlayed = parts.Length > 4 ? parts[4].Trim() : null;
+                string favorite = parts.Length > 5 ? parts[5].Trim() : null;
 
                 foreach (GameRom rom in roms)
                 {
@@ -154,6 +155,8 @@ namespace Polymulator
                         rom.Notes = notes;
                         if (!string.IsNullOrWhiteSpace(lastPlayed))
                             rom.LastPlayedDateTime = DateTime.Parse(lastPlayed);
+                        if (!string.IsNullOrWhiteSpace(favorite))
+                            rom.Favorite = bool.Parse(favorite);
                     }
                 }
             }
@@ -169,7 +172,7 @@ namespace Polymulator
             foreach (GameRom rom in roms)
             {
                 string lastPlayed = rom.LastPlayedDateTime.HasValue ? rom.LastPlayed : null;
-                lines.Add($"{rom.Path};{rom.CoverArtFile};{rom.ScreenshotFile};{rom.Notes};{lastPlayed}");
+                lines.Add($"{rom.Path};{rom.CoverArtFile};{rom.ScreenshotFile};{rom.Notes};{lastPlayed};{rom.Favorite}");
             }
 
             File.WriteAllLines(RomInfoFile, lines.ToArray());

@@ -39,8 +39,10 @@
             this.MiOpenAppStyleConfig = new System.Windows.Forms.ToolStripMenuItem();
             this.MiOpenEmulatorConfig = new System.Windows.Forms.ToolStripMenuItem();
             this.MiOpenRomConfig = new System.Windows.Forms.ToolStripMenuItem();
+            this.MiOpenJoypadConfig = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.MiOpenConfigFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.MiReload = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MiAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -49,10 +51,8 @@
             this.LsEmulators = new System.Windows.Forms.ListBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.PnGames = new System.Windows.Forms.Panel();
-            this.PnActions = new System.Windows.Forms.Panel();
-            this.MiReload = new System.Windows.Forms.ToolStripMenuItem();
-            this.MiOpenJoypadConfig = new System.Windows.Forms.ToolStripMenuItem();
             this.GameSelector = new Polymulator.GameSelector();
+            this.PnActions = new System.Windows.Forms.Panel();
             this.ActionPanel = new Polymulator.ActionPanel();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -153,6 +153,13 @@
             this.MiOpenRomConfig.Text = "Open ROM config file";
             this.MiOpenRomConfig.Click += new System.EventHandler(this.MiOpenRomConfig_Click);
             // 
+            // MiOpenJoypadConfig
+            // 
+            this.MiOpenJoypadConfig.Name = "MiOpenJoypadConfig";
+            this.MiOpenJoypadConfig.Size = new System.Drawing.Size(241, 22);
+            this.MiOpenJoypadConfig.Text = "Open joypad config dialog";
+            this.MiOpenJoypadConfig.Click += new System.EventHandler(this.MiOpenJoypadConfig_Click);
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -165,6 +172,14 @@
             this.MiOpenConfigFolder.Size = new System.Drawing.Size(241, 22);
             this.MiOpenConfigFolder.Text = "Open config files folder";
             this.MiOpenConfigFolder.Click += new System.EventHandler(this.MiOpenConfigFolder_Click);
+            // 
+            // MiReload
+            // 
+            this.MiReload.Name = "MiReload";
+            this.MiReload.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.MiReload.Size = new System.Drawing.Size(241, 22);
+            this.MiReload.Text = "Reload";
+            this.MiReload.Click += new System.EventHandler(this.MiReload_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -260,36 +275,10 @@
             this.PnGames.Size = new System.Drawing.Size(830, 639);
             this.PnGames.TabIndex = 0;
             // 
-            // PnActions
-            // 
-            this.PnActions.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.PnActions.Controls.Add(this.ActionPanel);
-            this.PnActions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PnActions.Location = new System.Drawing.Point(0, 0);
-            this.PnActions.Margin = new System.Windows.Forms.Padding(0);
-            this.PnActions.Name = "PnActions";
-            this.PnActions.Size = new System.Drawing.Size(313, 639);
-            this.PnActions.TabIndex = 0;
-            // 
-            // MiReload
-            // 
-            this.MiReload.Name = "MiReload";
-            this.MiReload.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.MiReload.Size = new System.Drawing.Size(241, 22);
-            this.MiReload.Text = "Reload";
-            this.MiReload.Click += new System.EventHandler(this.MiReload_Click);
-            // 
-            // MiOpenJoypadConfig
-            // 
-            this.MiOpenJoypadConfig.Name = "MiOpenJoypadConfig";
-            this.MiOpenJoypadConfig.Size = new System.Drawing.Size(241, 22);
-            this.MiOpenJoypadConfig.Text = "Open joypad config dialog";
-            this.MiOpenJoypadConfig.Click += new System.EventHandler(this.MiOpenJoypadConfig_Click);
-            // 
             // GameSelector
             // 
             this.GameSelector.AutoScroll = true;
-            this.GameSelector.BackColor = System.Drawing.Color.DarkSlateBlue;
+            this.GameSelector.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.GameSelector.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GameSelector.Emulator = null;
             this.GameSelector.ForeColor = System.Drawing.Color.WhiteSmoke;
@@ -303,8 +292,20 @@
             this.GameSelector.TabIndex = 0;
             this.GameSelector.Window = null;
             // 
+            // PnActions
+            // 
+            this.PnActions.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.PnActions.Controls.Add(this.ActionPanel);
+            this.PnActions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PnActions.Location = new System.Drawing.Point(0, 0);
+            this.PnActions.Margin = new System.Windows.Forms.Padding(0);
+            this.PnActions.Name = "PnActions";
+            this.PnActions.Size = new System.Drawing.Size(313, 639);
+            this.PnActions.TabIndex = 0;
+            // 
             // ActionPanel
             // 
+            this.ActionPanel.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.ActionPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ActionPanel.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold);
             this.ActionPanel.ForeColor = System.Drawing.Color.WhiteSmoke;

@@ -33,12 +33,13 @@
             this.PnTbGames = new System.Windows.Forms.Panel();
             this.TopPanelOuter = new System.Windows.Forms.Panel();
             this.TopPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.LbPage = new System.Windows.Forms.Label();
             this.LbRomsFound = new System.Windows.Forms.Label();
             this.LbMachine = new System.Windows.Forms.Label();
-            this.LbPage = new System.Windows.Forms.Label();
             this.PnPageLinks = new System.Windows.Forms.FlowLayoutPanel();
             this.LnkPrevPage = new System.Windows.Forms.LinkLabel();
             this.LnkNextPage = new System.Windows.Forms.LinkLabel();
+            this.ChkOnlyFavorites = new System.Windows.Forms.CheckBox();
             this.TbMain.SuspendLayout();
             this.PnTbGames.SuspendLayout();
             this.TopPanelOuter.SuspendLayout();
@@ -74,7 +75,7 @@
             this.TbMain.RowCount = 2;
             this.TbMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.TbMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.TbMain.Size = new System.Drawing.Size(380, 415);
+            this.TbMain.Size = new System.Drawing.Size(395, 415);
             this.TbMain.TabIndex = 1;
             // 
             // PnTbGames
@@ -82,10 +83,10 @@
             this.PnTbGames.AutoScroll = true;
             this.PnTbGames.Controls.Add(this.TbGames);
             this.PnTbGames.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PnTbGames.Location = new System.Drawing.Point(0, 50);
+            this.PnTbGames.Location = new System.Drawing.Point(0, 54);
             this.PnTbGames.Margin = new System.Windows.Forms.Padding(0);
             this.PnTbGames.Name = "PnTbGames";
-            this.PnTbGames.Size = new System.Drawing.Size(380, 365);
+            this.PnTbGames.Size = new System.Drawing.Size(395, 365);
             this.PnTbGames.TabIndex = 0;
             // 
             // TopPanelOuter
@@ -98,19 +99,21 @@
             this.TopPanelOuter.Margin = new System.Windows.Forms.Padding(0);
             this.TopPanelOuter.Name = "TopPanelOuter";
             this.TopPanelOuter.Padding = new System.Windows.Forms.Padding(5, 8, 5, 10);
-            this.TopPanelOuter.Size = new System.Drawing.Size(380, 50);
+            this.TopPanelOuter.Size = new System.Drawing.Size(395, 54);
             this.TopPanelOuter.TabIndex = 1;
             // 
             // TopPanel
             // 
             this.TopPanel.AutoSize = true;
-            this.TopPanel.ColumnCount = 2;
-            this.TopPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.TopPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.TopPanel.ColumnCount = 3;
+            this.TopPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.TopPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.TopPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.TopPanel.Controls.Add(this.LbPage, 1, 0);
             this.TopPanel.Controls.Add(this.LbRomsFound, 0, 1);
             this.TopPanel.Controls.Add(this.LbMachine, 0, 0);
             this.TopPanel.Controls.Add(this.PnPageLinks, 1, 1);
+            this.TopPanel.Controls.Add(this.ChkOnlyFavorites, 2, 0);
             this.TopPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TopPanel.Location = new System.Drawing.Point(5, 8);
             this.TopPanel.Margin = new System.Windows.Forms.Padding(0);
@@ -118,14 +121,22 @@
             this.TopPanel.RowCount = 2;
             this.TopPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.TopPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.TopPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.TopPanel.Size = new System.Drawing.Size(368, 30);
+            this.TopPanel.Size = new System.Drawing.Size(383, 34);
             this.TopPanel.TabIndex = 2;
+            // 
+            // LbPage
+            // 
+            this.LbPage.AutoSize = true;
+            this.LbPage.Location = new System.Drawing.Point(130, 0);
+            this.LbPage.Name = "LbPage";
+            this.LbPage.Size = new System.Drawing.Size(62, 13);
+            this.LbPage.TabIndex = 2;
+            this.LbPage.Text = "Page 0 of 0";
             // 
             // LbRomsFound
             // 
             this.LbRomsFound.AutoSize = true;
-            this.LbRomsFound.Location = new System.Drawing.Point(3, 15);
+            this.LbRomsFound.Location = new System.Drawing.Point(3, 17);
             this.LbRomsFound.Name = "LbRomsFound";
             this.LbRomsFound.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.LbRomsFound.Size = new System.Drawing.Size(64, 15);
@@ -141,25 +152,16 @@
             this.LbMachine.TabIndex = 0;
             this.LbMachine.Text = "Machine";
             // 
-            // LbPage
-            // 
-            this.LbPage.AutoSize = true;
-            this.LbPage.Location = new System.Drawing.Point(187, 0);
-            this.LbPage.Name = "LbPage";
-            this.LbPage.Size = new System.Drawing.Size(62, 13);
-            this.LbPage.TabIndex = 2;
-            this.LbPage.Text = "Page 0 of 0";
-            // 
             // PnPageLinks
             // 
             this.PnPageLinks.AutoSize = true;
             this.PnPageLinks.Controls.Add(this.LnkPrevPage);
             this.PnPageLinks.Controls.Add(this.LnkNextPage);
             this.PnPageLinks.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PnPageLinks.Location = new System.Drawing.Point(184, 15);
+            this.PnPageLinks.Location = new System.Drawing.Point(127, 17);
             this.PnPageLinks.Margin = new System.Windows.Forms.Padding(0);
             this.PnPageLinks.Name = "PnPageLinks";
-            this.PnPageLinks.Size = new System.Drawing.Size(184, 15);
+            this.PnPageLinks.Size = new System.Drawing.Size(127, 17);
             this.PnPageLinks.TabIndex = 3;
             this.PnPageLinks.WrapContents = false;
             // 
@@ -185,6 +187,19 @@
             this.LnkNextPage.Text = "Next";
             this.LnkNextPage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LnkNextPage_LinkClicked);
             // 
+            // ChkOnlyFavorites
+            // 
+            this.ChkOnlyFavorites.AutoSize = true;
+            this.ChkOnlyFavorites.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ChkOnlyFavorites.Location = new System.Drawing.Point(254, 0);
+            this.ChkOnlyFavorites.Margin = new System.Windows.Forms.Padding(0);
+            this.ChkOnlyFavorites.Name = "ChkOnlyFavorites";
+            this.ChkOnlyFavorites.Size = new System.Drawing.Size(129, 17);
+            this.ChkOnlyFavorites.TabIndex = 4;
+            this.ChkOnlyFavorites.Text = "Display only favorites";
+            this.ChkOnlyFavorites.UseVisualStyleBackColor = true;
+            this.ChkOnlyFavorites.CheckedChanged += new System.EventHandler(this.ChkOnlyFavorites_CheckedChanged);
+            // 
             // GameSelector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -193,7 +208,7 @@
             this.DoubleBuffered = true;
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "GameSelector";
-            this.Size = new System.Drawing.Size(380, 415);
+            this.Size = new System.Drawing.Size(395, 415);
             this.TbMain.ResumeLayout(false);
             this.TbMain.PerformLayout();
             this.PnTbGames.ResumeLayout(false);
@@ -221,5 +236,6 @@
         private System.Windows.Forms.FlowLayoutPanel PnPageLinks;
         private System.Windows.Forms.LinkLabel LnkPrevPage;
         private System.Windows.Forms.LinkLabel LnkNextPage;
+        private System.Windows.Forms.CheckBox ChkOnlyFavorites;
     }
 }

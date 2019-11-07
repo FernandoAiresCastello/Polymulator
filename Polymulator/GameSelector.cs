@@ -17,6 +17,7 @@ namespace Polymulator
         public int Page { set; get; }
         public int Pages { set; get; }
         public GameSelectorItem SelectedItem { set; get; }
+        public bool DisplayOnlyFavorites => ChkOnlyFavorites.Checked;
 
         private List<GameSelectorItem> Items = new List<GameSelectorItem>();
 
@@ -66,7 +67,10 @@ namespace Polymulator
             for (int i = Page * maxGamesPerPage; i < emulator.Roms.Count; i++)
             {
                 GameRom rom = emulator.Roms[i];
-                Items.Add(new GameSelectorItem(this, rom));
+
+                if (!DisplayOnlyFavorites || (DisplayOnlyFavorites && rom.Favorite))
+                    Items.Add(new GameSelectorItem(this, rom));
+
                 if (Items.Count >= maxGamesPerPage)
                     break;
             }
@@ -89,7 +93,12 @@ namespace Polymulator
         public void UpdateInfo(Emulator emulator)
         {
             LbMachine.Text = emulator.MachineName;
-            LbRomsFound.Text = emulator.Roms.Count + " games found";
+
+            if (DisplayOnlyFavorites)
+                LbRomsFound.Text = $"{Items.Count} favorite games found (out of {emulator.Roms.Count})";
+            else
+                LbRomsFound.Text = emulator.Roms.Count + " games found";
+            
             LbPage.Text = Pages > 1 ? $"Page {Page + 1} of {Pages}" : "";
 
             if (Pages > 1)
@@ -153,6 +162,11 @@ namespace Polymulator
         private void LnkNextPage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             NextPage();
+        }
+
+        private void ChkOnlyFavorites_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateGames();
         }
     }
 }

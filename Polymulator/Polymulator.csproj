@@ -117,6 +117,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\star.png" />
     <None Include="Resources\no-screenshot.png" />
     <None Include="Resources\rom-file.png" />
     <None Include="Resources\tick_octagon.png" />

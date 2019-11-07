@@ -16,6 +16,7 @@ namespace Polymulator
         public string ScreenshotFile { set; get; }
         public string Notes { set; get; }
         public DateTime? LastPlayedDateTime { set; get; }
+        public bool Favorite { set; get; }
 
         public string FriendlyTitle => GetFriendlyTitle();
         public string Size => SizeSuffix(new FileInfo(Path).Length);

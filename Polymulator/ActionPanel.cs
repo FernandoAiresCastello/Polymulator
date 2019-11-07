@@ -72,6 +72,8 @@ namespace Polymulator
                 );
 
                 LbTitle.Text = rom.FriendlyTitle;
+                PbFavorite.Image = rom.Favorite ? Properties.Resources.star : null;
+                LnkAddFavorite.Text = Item.Rom.Favorite ? "Remove from favorites" : "Add to favorites";
                 TxtNotes.Text = rom.Notes;
                 PbScreenshot.Image = !string.IsNullOrWhiteSpace(rom.ScreenshotFile) ? 
                     Image.FromFile(rom.ScreenshotFile) : NoScreenshot;
@@ -128,7 +130,10 @@ namespace Polymulator
 
         private void LnkAddFavorite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // todo
+            Item.Rom.Favorite = !Item.Rom.Favorite;
+            UpdatePanel();
+            if (Window.Selector.DisplayOnlyFavorites)
+                Window.UpdateGameSelector();
         }
 
         private void LnkSetCoverArt_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
