@@ -19,8 +19,10 @@ namespace Polymulator
         public bool Favorite { set; get; }
 
         public string FriendlyTitle => GetFriendlyTitle();
-        public string Size => SizeSuffix(new FileInfo(Path).Length);
-        public string LastPlayed => LastPlayedDateTime.HasValue ? LastPlayedDateTime.Value.ToString() : "Never";        
+        public long Size => new FileInfo(Path).Length;
+        public string SizeDescription => SizeSuffix(Size);
+        public string LastPlayed => LastPlayedDateTime.HasValue ? LastPlayedDateTime.Value.ToString() : "Never";
+        public bool HasCoverArt => !string.IsNullOrWhiteSpace(CoverArtFile);
 
         public GameRom()
         {

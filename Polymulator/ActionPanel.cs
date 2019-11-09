@@ -67,7 +67,7 @@ namespace Polymulator
                 SetInfo
                 (
                     $"Filename: {rom.File}", 
-                    $"Size: {rom.Size}",
+                    $"Size: {rom.SizeDescription}",
                     $"Last played: {rom.LastPlayed}"
                 );
 
@@ -196,6 +196,7 @@ namespace Polymulator
             {
                 Item.Rom.LastPlayedDateTime = null;
                 UpdatePanel();
+                Window.UpdateGameSelector();
             }
         }
     }

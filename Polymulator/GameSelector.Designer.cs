@@ -40,6 +40,7 @@
             this.LnkPrevPage = new System.Windows.Forms.LinkLabel();
             this.LnkNextPage = new System.Windows.Forms.LinkLabel();
             this.ChkOnlyFavorites = new System.Windows.Forms.CheckBox();
+            this.CbSortBy = new System.Windows.Forms.ComboBox();
             this.TbMain.SuspendLayout();
             this.PnTbGames.SuspendLayout();
             this.TopPanelOuter.SuspendLayout();
@@ -83,7 +84,7 @@
             this.PnTbGames.AutoScroll = true;
             this.PnTbGames.Controls.Add(this.TbGames);
             this.PnTbGames.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PnTbGames.Location = new System.Drawing.Point(0, 54);
+            this.PnTbGames.Location = new System.Drawing.Point(0, 74);
             this.PnTbGames.Margin = new System.Windows.Forms.Padding(0);
             this.PnTbGames.Name = "PnTbGames";
             this.PnTbGames.Size = new System.Drawing.Size(395, 365);
@@ -99,7 +100,7 @@
             this.TopPanelOuter.Margin = new System.Windows.Forms.Padding(0);
             this.TopPanelOuter.Name = "TopPanelOuter";
             this.TopPanelOuter.Padding = new System.Windows.Forms.Padding(5, 8, 5, 10);
-            this.TopPanelOuter.Size = new System.Drawing.Size(395, 54);
+            this.TopPanelOuter.Size = new System.Drawing.Size(395, 74);
             this.TopPanelOuter.TabIndex = 1;
             // 
             // TopPanel
@@ -114,6 +115,7 @@
             this.TopPanel.Controls.Add(this.LbMachine, 0, 0);
             this.TopPanel.Controls.Add(this.PnPageLinks, 1, 1);
             this.TopPanel.Controls.Add(this.ChkOnlyFavorites, 2, 0);
+            this.TopPanel.Controls.Add(this.CbSortBy, 2, 1);
             this.TopPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TopPanel.Location = new System.Drawing.Point(5, 8);
             this.TopPanel.Margin = new System.Windows.Forms.Padding(0);
@@ -121,7 +123,7 @@
             this.TopPanel.RowCount = 2;
             this.TopPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.TopPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.TopPanel.Size = new System.Drawing.Size(383, 34);
+            this.TopPanel.Size = new System.Drawing.Size(383, 54);
             this.TopPanel.TabIndex = 2;
             // 
             // LbPage
@@ -136,7 +138,7 @@
             // LbRomsFound
             // 
             this.LbRomsFound.AutoSize = true;
-            this.LbRomsFound.Location = new System.Drawing.Point(3, 17);
+            this.LbRomsFound.Location = new System.Drawing.Point(3, 27);
             this.LbRomsFound.Name = "LbRomsFound";
             this.LbRomsFound.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.LbRomsFound.Size = new System.Drawing.Size(64, 15);
@@ -158,10 +160,10 @@
             this.PnPageLinks.Controls.Add(this.LnkPrevPage);
             this.PnPageLinks.Controls.Add(this.LnkNextPage);
             this.PnPageLinks.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PnPageLinks.Location = new System.Drawing.Point(127, 17);
+            this.PnPageLinks.Location = new System.Drawing.Point(127, 27);
             this.PnPageLinks.Margin = new System.Windows.Forms.Padding(0);
             this.PnPageLinks.Name = "PnPageLinks";
-            this.PnPageLinks.Size = new System.Drawing.Size(127, 17);
+            this.PnPageLinks.Size = new System.Drawing.Size(127, 27);
             this.PnPageLinks.TabIndex = 3;
             this.PnPageLinks.WrapContents = false;
             // 
@@ -194,11 +196,23 @@
             this.ChkOnlyFavorites.Location = new System.Drawing.Point(254, 0);
             this.ChkOnlyFavorites.Margin = new System.Windows.Forms.Padding(0);
             this.ChkOnlyFavorites.Name = "ChkOnlyFavorites";
-            this.ChkOnlyFavorites.Size = new System.Drawing.Size(129, 17);
+            this.ChkOnlyFavorites.Size = new System.Drawing.Size(129, 27);
             this.ChkOnlyFavorites.TabIndex = 4;
             this.ChkOnlyFavorites.Text = "Display only favorites";
             this.ChkOnlyFavorites.UseVisualStyleBackColor = true;
             this.ChkOnlyFavorites.CheckedChanged += new System.EventHandler(this.ChkOnlyFavorites_CheckedChanged);
+            // 
+            // CbSortBy
+            // 
+            this.CbSortBy.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CbSortBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CbSortBy.FormattingEnabled = true;
+            this.CbSortBy.Location = new System.Drawing.Point(257, 30);
+            this.CbSortBy.Margin = new System.Windows.Forms.Padding(0);
+            this.CbSortBy.Name = "CbSortBy";
+            this.CbSortBy.Size = new System.Drawing.Size(123, 21);
+            this.CbSortBy.TabIndex = 5;
+            this.CbSortBy.SelectedValueChanged += new System.EventHandler(this.CbSortBy_SelectedValueChanged);
             // 
             // GameSelector
             // 
@@ -237,5 +251,6 @@
         private System.Windows.Forms.LinkLabel LnkPrevPage;
         private System.Windows.Forms.LinkLabel LnkNextPage;
         private System.Windows.Forms.CheckBox ChkOnlyFavorites;
+        private System.Windows.Forms.ComboBox CbSortBy;
     }
 }

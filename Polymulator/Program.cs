@@ -13,8 +13,17 @@ namespace Polymulator
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new MainWindow());
-            Application.Run(new GameSelectWindow());
+            GameSelectWindow window = new GameSelectWindow();
+
+            try
+            {
+                Application.Run(window);
+            }
+            catch
+            {
+                window.SaveRomInfo();
+                throw;
+            }
         }
     }
 }

@@ -81,6 +81,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SortType.cs" />
     <EmbeddedResource Include="ActionPanel.resx">
       <DependentUpon>ActionPanel.cs</DependentUpon>
     </EmbeddedResource>

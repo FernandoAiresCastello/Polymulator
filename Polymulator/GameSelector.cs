@@ -18,6 +18,7 @@ namespace Polymulator
         public int Pages { set; get; }
         public GameSelectorItem SelectedItem { set; get; }
         public bool DisplayOnlyFavorites => ChkOnlyFavorites.Checked;
+        public SortType Sort { set; get; } = new SortType();
 
         private List<GameSelectorItem> Items = new List<GameSelectorItem>();
 
@@ -32,6 +33,8 @@ namespace Polymulator
             UpdateStyle();
             TbGames.ColumnCount = ApplicationSettings.GameSelectorColumns;
             TbGames.RowCount = 0;
+            CbSortBy.Font = new Font(CbSortBy.Font.FontFamily, CbSortBy.Font.Size - 1, CbSortBy.Font.Style);
+            CbSortBy.DataSource = SortType.List;
         }
 
         public void UpdateStyle()
@@ -62,6 +65,7 @@ namespace Polymulator
 
             Pages = emulator.Roms.Count / maxGamesPerPage + 1;
 
+            ApplySort();
             Items.Clear();
 
             for (int i = Page * maxGamesPerPage; i < emulator.Roms.Count; i++)
@@ -88,6 +92,65 @@ namespace Polymulator
 
             if (Items.Count > 0)
                 Items[0].SelectItem();
+        }
+
+        public void ApplySort()
+        {
+            Emulator.Roms.Sort
+            (
+                delegate (GameRom rom1, GameRom rom2)
+                {
+                    int comparedByName = rom1.FriendlyTitle.CompareTo(rom2.FriendlyTitle);
+
+                    if (Sort.Equals(SortType.ByName))
+                    {
+                        return comparedByName;
+                    }
+                    else if (Sort.Equals(SortType.ByFileSizeAsc))
+                    {
+                        return rom1.Size.CompareTo(rom2.Size);
+                    }
+                    else if (Sort.Equals(SortType.ByFileSizeDesc))
+                    {
+                        return rom2.Size.CompareTo(rom1.Size);
+                    }
+                    else if (Sort.Equals(SortType.FavoritesFirst))
+                    {
+                        if (rom1.Favorite && rom2.Favorite)
+                            return rom2.Favorite.CompareTo(rom1.Favorite);
+                        else if (rom1.Favorite)
+                            return -1;
+                        else if (rom2.Favorite)
+                            return 1;
+                        else
+                            return comparedByName;
+                    }
+                    else if (Sort.Equals(SortType.ByLastTimePlayed))
+                    {
+                        if (rom1.LastPlayedDateTime.HasValue && rom2.LastPlayedDateTime.HasValue)
+                            return rom2.LastPlayedDateTime.Value.CompareTo(rom1.LastPlayedDateTime.Value);
+                        else if (rom1.LastPlayedDateTime.HasValue)
+                            return -1;
+                        else if (rom2.LastPlayedDateTime.HasValue)
+                            return 1;
+                        else
+                            return comparedByName;
+                    }
+                    else if (Sort.Equals(SortType.WithCoverArtFirst))
+                    {
+                        if (rom1.HasCoverArt && rom2.HasCoverArt)
+                            return rom2.HasCoverArt.CompareTo(rom1.HasCoverArt);
+                        else if (rom1.HasCoverArt)
+                            return -1;
+                        else if (rom2.HasCoverArt)
+                            return 1;
+                        else
+                            return comparedByName;
+                    }
+
+                    return 0;
+                }
+            );
         }
 
         public void UpdateInfo(Emulator emulator)
@@ -167,6 +230,15 @@ namespace Polymulator
         private void ChkOnlyFavorites_CheckedChanged(object sender, EventArgs e)
         {
             UpdateGames();
+        }
+
+        private void CbSortBy_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (Emulator != null)
+            {
+                Sort.Type = (string)CbSortBy.SelectedItem;
+                UpdateGames();
+            }
         }
     }
 }

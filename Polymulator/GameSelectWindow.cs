@@ -129,6 +129,11 @@ namespace Polymulator
             ActionPanel.UpdatePanel(item);
         }
 
+        public void SaveRomInfo()
+        {
+            ConfigFileManager.SaveRomInfo(AllRoms);
+        }
+
         private List<GameRom> GetAllRoms()
         {
             List<GameRom> roms = new List<GameRom>();
@@ -144,7 +149,7 @@ namespace Polymulator
 
         private void GameSelectWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ConfigFileManager.SaveRomInfo(AllRoms);
+            SaveRomInfo();
             Application.Exit();
         }
 
