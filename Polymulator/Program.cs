@@ -13,7 +13,7 @@ namespace Polymulator
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            GameSelectWindow window = new GameSelectWindow();
+            GameBrowserWindow window = new GameBrowserWindow();
 
             try
             {
@@ -21,7 +21,7 @@ namespace Polymulator
             }
             catch
             {
-                window.SaveRomInfo();
+                //window.SaveRomInfo();
                 throw;
             }
         }

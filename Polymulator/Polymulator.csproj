@@ -60,6 +60,12 @@
     <Compile Include="ConfigFileManager.cs" />
     <Compile Include="ApplicationStyle.cs" />
     <Compile Include="Emulator.cs" />
+    <Compile Include="GameBrowserWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameBrowserWindow.Designer.cs">
+      <DependentUpon>GameBrowserWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="GameRom.cs" />
     <Compile Include="GameSelector.cs">
       <SubType>UserControl</SubType>
@@ -84,6 +90,9 @@
     <Compile Include="SortType.cs" />
     <EmbeddedResource Include="ActionPanel.resx">
       <DependentUpon>ActionPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameBrowserWindow.resx">
+      <DependentUpon>GameBrowserWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GameSelector.resx">
       <DependentUpon>GameSelector.cs</DependentUpon>
