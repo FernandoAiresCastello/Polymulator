@@ -14,16 +14,7 @@ namespace Polymulator
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             GameBrowserWindow window = new GameBrowserWindow();
-
-            try
-            {
-                Application.Run(window);
-            }
-            catch
-            {
-                //window.SaveRomInfo();
-                throw;
-            }
+            Application.Run(window);
         }
     }
 }

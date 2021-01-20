@@ -29,76 +29,104 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameBrowserWindow));
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.MainPanel = new System.Windows.Forms.Panel();
-            this.ListView = new System.Windows.Forms.ListView();
-            this.MainPanel.SuspendLayout();
+            this.RootPanel = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.TxtRom = new System.Windows.Forms.TextBox();
+            this.TxtInfo = new System.Windows.Forms.TextBox();
+            this.LstRoms = new System.Windows.Forms.ListBox();
+            this.RootPanel.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip1
+            // RootPanel
             // 
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(530, 24);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
+            this.RootPanel.Controls.Add(this.tableLayoutPanel1);
+            this.RootPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.RootPanel.Location = new System.Drawing.Point(0, 0);
+            this.RootPanel.Name = "RootPanel";
+            this.RootPanel.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
+            this.RootPanel.Size = new System.Drawing.Size(784, 562);
+            this.RootPanel.TabIndex = 0;
             // 
-            // statusStrip1
+            // tableLayoutPanel1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 428);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(530, 22);
-            this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.TxtInfo, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.TxtRom, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.LstRoms, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(10, 5);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(764, 552);
+            this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // MainPanel
+            // TxtRom
             // 
-            this.MainPanel.AutoScroll = true;
-            this.MainPanel.Controls.Add(this.ListView);
-            this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainPanel.Location = new System.Drawing.Point(0, 24);
-            this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Padding = new System.Windows.Forms.Padding(10);
-            this.MainPanel.Size = new System.Drawing.Size(530, 404);
-            this.MainPanel.TabIndex = 2;
+            this.TxtRom.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TxtRom.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TxtRom.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxtRom.Location = new System.Drawing.Point(5, 5);
+            this.TxtRom.Margin = new System.Windows.Forms.Padding(5, 5, 5, 15);
+            this.TxtRom.Name = "TxtRom";
+            this.TxtRom.Size = new System.Drawing.Size(754, 22);
+            this.TxtRom.TabIndex = 0;
             // 
-            // ListView
+            // TxtInfo
             // 
-            this.ListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ListView.FullRowSelect = true;
-            this.ListView.GridLines = true;
-            this.ListView.HideSelection = false;
-            this.ListView.Location = new System.Drawing.Point(10, 10);
-            this.ListView.Name = "ListView";
-            this.ListView.Size = new System.Drawing.Size(510, 384);
-            this.ListView.TabIndex = 0;
-            this.ListView.UseCompatibleStateImageBehavior = false;
+            this.TxtInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TxtInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TxtInfo.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxtInfo.Location = new System.Drawing.Point(3, 462);
+            this.TxtInfo.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.TxtInfo.Multiline = true;
+            this.TxtInfo.Name = "TxtInfo";
+            this.TxtInfo.ReadOnly = true;
+            this.TxtInfo.Size = new System.Drawing.Size(758, 87);
+            this.TxtInfo.TabIndex = 1;
+            this.TxtInfo.WordWrap = false;
+            // 
+            // LstRoms
+            // 
+            this.LstRoms.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.LstRoms.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LstRoms.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LstRoms.FormattingEnabled = true;
+            this.LstRoms.ItemHeight = 23;
+            this.LstRoms.Location = new System.Drawing.Point(3, 45);
+            this.LstRoms.Name = "LstRoms";
+            this.LstRoms.ScrollAlwaysVisible = true;
+            this.LstRoms.Size = new System.Drawing.Size(758, 404);
+            this.LstRoms.Sorted = true;
+            this.LstRoms.TabIndex = 2;
             // 
             // GameBrowserWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(530, 450);
-            this.Controls.Add(this.MainPanel);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.menuStrip1);
+            this.ClientSize = new System.Drawing.Size(784, 562);
+            this.Controls.Add(this.RootPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
             this.Name = "GameBrowserWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Polymulator";
-            this.MainPanel.ResumeLayout(false);
+            this.RootPanel.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.Panel MainPanel;
-        private System.Windows.Forms.ListView ListView;
+        private System.Windows.Forms.Panel RootPanel;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TextBox TxtInfo;
+        private System.Windows.Forms.TextBox TxtRom;
+        private System.Windows.Forms.ListBox LstRoms;
     }
 }

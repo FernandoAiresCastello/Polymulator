@@ -22,6 +22,8 @@ namespace Polymulator
         public long Size => new FileInfo(Path).Length;
         public string SizeDescription => SizeSuffix(Size);
         public string LastPlayed => LastPlayedDateTime.HasValue ? LastPlayedDateTime.Value.ToString() : "Never";
+        public string Directory => new FileInfo(Path).DirectoryName;
+        public string Extension => new FileInfo(Path).Extension.Substring(1);
         public bool HasCoverArt => !string.IsNullOrWhiteSpace(CoverArtFile);
 
         public GameRom()
@@ -61,6 +63,11 @@ namespace Polymulator
         {
             string title = System.IO.Path.GetFileNameWithoutExtension(Path);
             return Regex.Replace(title, ApplicationSettings.FriendlyTitleRegex, "").Trim();
+        }
+
+        public override string ToString()
+        {
+            return GetFriendlyTitle();
         }
     }
 }
